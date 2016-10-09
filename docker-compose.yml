@@ -1,0 +1,30 @@
+app:
+    build: app
+    container_name: curt_app
+    tty: true
+    volumes:
+        - ./shared/cache:/var/www/curt/app/cache
+        - ./shared/logs/symfony:/var/www/curt/app/logs
+        - ./curt:/var/www/curt
+        # This makes sure all containers are synced up as far as date and time
+        - /etc/localtime:/etc/localtime:ro
+php:
+    build: php
+    container_name: curt_php
+    ports:
+        - 9000:9000
+    volumes:
+        - ./shared/sessions:/var/lib/php5/sessions
+    volumes_from:
+        - app
+nginx:
+    build: nginx
+    container_name: curt_nginx
+    links:
+        - php
+    ports:
+        - 80:80
+    volumes:
+        - ./shared/logs/nginx:/var/log/nginx
+    volumes_from:
+        - app
