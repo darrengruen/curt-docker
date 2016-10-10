@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER Darren Green <darren.green@meetingprotocol.com>
+MAINTAINER Darren Green <darren@gruen.site>
 
 RUN apt-get update \
     && apt-get install -y \
@@ -14,7 +14,6 @@ RUN apt-get update \
     libfontconfig \
     libxext-dev \
     && pecl install apc \
-    && pecl install mongo \
     && usermod -u 1000 www-data
 
 COPY curt.ini /etc/php5/fpm/conf.d/
@@ -24,4 +23,5 @@ COPY curt.pool.conf /etc/php5/fpm/pool.d/
 CMD [ "php5-fpm", "-F" ]
 
 EXPOSE 9000
+
 
