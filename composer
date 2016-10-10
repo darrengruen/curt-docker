@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+docker run --rm \
+    -v "$(pwd)":/app \
+    --name composer_"$(date +%Y%m%d%H%M%S)" \
+    composer/composer:1.1-php5 --ignore-platform-reqs "$@"
